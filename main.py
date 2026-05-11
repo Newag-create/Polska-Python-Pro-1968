@@ -1,4 +1,5 @@
 # This example requires the 'members' and 'message_content' privileged intents to function.
+# bot.commands.py
 
 import discord
 from discord.ext import commands
@@ -82,3 +83,69 @@ async def cool(ctx):
 async def _bot(ctx):
     """Is the bot cool?"""
     await ctx.send('Yes, the bot is cool.')
+    bot.run('TOKEN')
+
+# bot_logic.py
+
+import random
+def gen_pas(pass_length):
+    elements = "+-/*!&$#?=@<>qwertyuiopasdfghjklzxcvbnm[]}{|1234567890"
+    password = ""
+
+    for i in range(pass_length):
+        password += random.choice(elements)
+
+    return password
+def coin_toss():
+    coin = ["orzeł", "reszka"]
+    toss = random.choice(coin)
+    if toss == "orzeł":
+        print(" orzeł.")
+    else:
+        print(" reszka")
+    return toss 
+def emoi():
+    e = "😀😃😄😁🥚😆🫠😇🥰😜😍🙃😋🫥😶‍🌫️🤑🙂‍↔️🥵🥶🤠😎🥳🧐😲🥱💀👻😻💗💌🌶️❤️💯👋🌹🍄🍇👍🍋‍🟩🫛🍞🥐👊🕷️🍒👏🌭🥞🐟🍣🧊🍲🌳🇸🇦🦞🐒🌯🦍🧊🦧🦝🐺🦏🦚🐟🦖"
+    emoij = random.choice(e)
+    print(emoij)
+    return emoij
+    
+# bot.py
+
+from bot_logic import coin_toss 
+from bot_logic import gen_pas
+from bot_logic import emoi
+import discord
+# Zmienna intents przechowuje uprawnienia bota
+intents = discord.Intents.default()
+# Włączanie uprawnienia do czytania wiadomości
+intents.message_content = True
+# Tworzenie bota w zmiennej client i przekazanie mu uprawnień
+client = discord.Client(intents=intents)
+
+@client.event
+async def on_ready():
+    print(f'Zalogowaliśmy się jako {client.user}')
+
+@client.event
+async def on_message(message):
+    for guild in client.guilds:
+        for channel in guild.text_channels:
+            if channel.name == "#ogólny":
+                await channel.send("Cześć wszystkim 😊")
+                return
+    if message.author == client.user:
+        return
+    if message.content.startswith('$hello'):
+        await message.channel.send("Cześć!")
+    elif message.content.startswith('$bye'):
+        await message.channel.send("\U0001f642")
+    elif message.content.startswith('?haslo'):
+        await message.channel.send("Twoje hasło: " + gen_pas(10))
+    elif message.content.startswith('rzut moneta'):
+        await message.channel.send("Wypadł/Wypadła " + coin_toss())
+    elif message.content.startswith('emoj'):
+        await message.channel.send(emoi())
+    else:
+        await message.channel.send(message.content)
+client.run("")
