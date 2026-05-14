@@ -122,18 +122,18 @@ intents = discord.Intents.default()
 intents.message_content = True
 # Tworzenie bota w zmiennej client i przekazanie mu uprawnień
 client = discord.Client(intents=intents)
-
 @client.event
 async def on_ready():
     print(f'Zalogowaliśmy się jako {client.user}')
 
-@client.event
-async def on_message(message):
     for guild in client.guilds:
         for channel in guild.text_channels:
-            if channel.name == "#ogólny":
+            if channel.name == "ogólny":
                 await channel.send("Cześć wszystkim 😊")
                 return
+
+@client.event
+async def on_message(message):
     if message.author == client.user:
         return
     if message.content.startswith('$hello'):
@@ -148,4 +148,4 @@ async def on_message(message):
         await message.channel.send(emoi())
     else:
         await message.channel.send(message.content)
-client.run("")
+client.run("TOKEN")
