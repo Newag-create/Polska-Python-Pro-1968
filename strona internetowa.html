@@ -1,0 +1,47 @@
+#html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Czaszka</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Czaszka</h1>
+    <iframe src="https://www.meteoblue.com/en/weather/widget/daily/warsaw_poland_756135?geoloc=fixed&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&precipunit=MILLIMETER&days=4&coloured=coloured&pictoicon=1&maxtemperature=1&mintemperature=1&windspeed=1&windgust=0&winddirection=1&uv=0&humidity=0&precipitation=1&precipitationprobability=1&spot=1&pressure=0&layout=light&user_key=b07c9ce8a0a8b408&embed_key=b81424cd1796b5e1&sig=b6bc469cc84d66cfc7c9b84f28eccadf17620dc5be62c4958857348907ac494d" frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups allow-popups-to-escape-sandbox" style="width: 216px;height: 348px;border: 0;overflow: hidden;"></iframe><div><!-- DO NOT REMOVE THIS LINK --><a href="https://www.meteoblue.com/en/weather/week/index" target="_blank" rel="noopener">meteoblue</a></div>
+    <p>Zdjęcie czaszki</p>
+    <h2>Ta czaszka:</h2>
+    <ul>
+        <li>Wygląda, jakby nie była czaszką ludzką</li>
+        <li>Ma zmrużone oczy, co wygląda wrogo</li>
+    </ul>
+    <img src="https://img.freepik.com/premium-wektory/czaszka-kosc-czaszka-kroliki-zabawna-kobieta-reczny-rysunek-szkic-reczne-rysunek-lekarstwo_1073201-17786.jpg?w=1060" alt="czaszka">
+</body>
+</html>
+
+#style.CSS
+
+@keyframes color-change {
+  0%   { color: blue; }
+  50%  { color: red; }
+  100% { color: blue; }
+}
+
+body {
+    font-family: Arial,  sans-serif; /* Rodzina czcionek */
+    font-size: 11px; /* Rozmiar głównej czcionki w <p></p> tag  */
+    background-color: #0055ff; /* Kolor tła strony internetowej */
+    color: #333333; /* Kolor tła strony internetowej*/ 
+}
+
+h1:hover{
+    color: #abad37; /* Kolor nagłówka */
+    font-size: 24px; /* Rozmiar czcionki nagłówka */
+    font-family: Georgia, serif; /* Rodzina czcionek używana w nagłówku */
+    animation: color-change 3s infinite;
+}
+
+h2 {
+    color: #36e1d9; /* Kolor nagłówka */
+    font-size: 20px; /* Rozmiar czcionki nagłówka */
+    font-family: Georgia, serif; /* Rodzina czcionek używana w nagłówku */
+}
