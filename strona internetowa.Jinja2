@@ -1,0 +1,347 @@
+#main.py
+
+from flask import Flask, render_template
+
+
+app = Flask(__name__)
+
+def result_calculate(size, lights, device):
+# Zmienne umożliwiające obliczenie poboru energii przez urządzenia
+    home_coef = 100
+    light_coef = 0.04
+    devices_coef = 5   
+    return size * home_coef + lights * light_coef + device * devices_coef 
+
+# Pierwsza strona
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+# Druga strona
+@app.route('/<size>')
+def lights(size):
+    return render_template(
+                            'lights.html', 
+                            size=size
+                           )
+
+# Trzecia strona
+@app.route('/<size>/<lights>')
+def electronics(size, lights):
+    return render_template(
+                            'electronics.html',
+                            size = size, 
+                            lights = lights                           
+                           )
+
+# Obliczenia
+@app.route('/<size>/<lights>/<device>')
+def end(size, lights, device):
+    return render_template('end.html', 
+                            result=result_calculate(int(size),
+                                                    int(lights), 
+                                                    int(device)
+                                                    )
+                        )
+app.run(debug=True)
+
+#index.html
+
+from flask import Flask, render_template
+
+
+app = Flask(__name__)
+
+def result_calculate(size, lights, device):
+# Zmienne umożliwiające obliczenie poboru energii przez urządzenia
+    home_coef = 100
+    light_coef = 0.04
+    devices_coef = 5   
+    return size * home_coef + lights * light_coef + device * devices_coef 
+
+# Pierwsza strona
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+# Druga strona
+@app.route('/<size>')
+def lights(size):
+    return render_template(
+                            'lights.html', 
+                            size=size
+                           )
+
+# Trzecia strona
+@app.route('/<size>/<lights>')
+def electronics(size, lights):
+    return render_template(
+                            'electronics.html',
+                            size = size, 
+                            lights = lights                           
+                           )
+
+# Obliczenia
+@app.route('/<size>/<lights>/<device>')
+def end(size, lights, device):
+    return render_template('end.html', 
+                            result=result_calculate(int(size),
+                                                    int(lights), 
+                                                    int(device)
+                                                    )
+                        )
+app.run(debug=True)
+
+#lights.html
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+  >
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <title>Kalkulator efektywności energetycznej dla inteligentnych domów</title>
+</head>
+<body>
+  <header class="header">
+    <div class="header__text">
+      <h1>Oblicz efektywność energetyczną swojego domu!</h1>
+      <p>Wykaż inicjatywę i rozwiąż problem nadmiernego zużycia energii!</p>
+    </div>
+  </header>
+  <main>
+    {% block content %}
+    <h2 class="main__title">Wybierz, ile lamp znajduje się w Twoim domu:</h2>
+    <ul class="list" id="list">
+      <li class="list__item">
+        <a href="{{size + "/3" }}">
+          <img class="item__img" src="../static/img/light.svg" alt="light">
+          <span>2-4 lamp</span></a>
+      </li>
+      <!--Assignment #2 -->
+      <li class="list__item">
+        <a href="{{size +  "/7"}}"> 
+          <img class="item__img" src="../static/img/light.svg" alt="light">
+          <span>4-6 lamp</span></a>
+      </li>
+      <li class="list__item">
+        <a href="{{size + "/10"}}">
+          <img class="item__img" src="../static/img/light.svg" alt="light">
+          <span>8+ lamp</span></a>
+      </li>
+      <li class="list__item">
+        <a href="{{size + "/3"}}">
+          <img class="item__img" src="../static/img/Eko.png" alt="light">
+          <span>Eko</span></a>
+      </li>
+    </ul>
+    {% endblock %}
+  </main>
+  <footer>
+
+  </footer>
+</body>
+</html>
+
+#electronics.html
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+  >
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <title>Kalkulator efektywności energetycznej dla inteligentnych domów</title>
+</head>
+<body>
+  <header class="header">
+    <div class="header__text">
+      <h1>Oblicz efektywność energetyczną swojego domu!</h1>
+      <p>Wykaż inicjatywę i rozwiąż problem nadmiernego zużycia energii!</p>
+    </div>
+  </header>
+  <main>
+    {% block content %}
+    <h2 class="main__title">Podaj liczbę urządzeń korzystających z prądu:</h2>
+    <ul class="list" id="list">
+      <!-- Zadanie #3 -->
+      <li class="list__item">
+        <a href="{{lights + "/4"}}">
+          <img class="item__img" src="../static/img/battery.svg" alt="battery">
+          <span>3-5 urządzeń</span></a>
+      </li>
+      <li class="list__item">
+        <a href="{{lights + "/8"}}">
+          <img class="item__img" src="../static/img/battery.svg" alt="battery">
+          <span>6-8 urządzeń</span></a>
+      </li>
+      <li class="list__item">
+        <a href="{{lights + "/10"}}">
+          <img class="item__img" src="../static/img/battery.svg" alt="battery">
+          <span>10+ urządzeń</span></a>
+      </li>
+      <li class="list__item">
+        <a href="{{lights + " /4"}}">
+          <img class="item__img" src="..\static\img\logo_recykling.svg" alt="battery">
+          <span>eko</span></a>
+      </li>
+    </ul>
+    {% endblock %}
+  </main>
+  <footer>
+
+  </footer>
+</body>
+</html>
+
+#end.html
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+  >
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../../static/css/style.css"> 
+  <title>Kalkulator efektywności energetycznej dla inteligentnych domów</title>
+</head>
+<body>
+  <header class="header">
+    <div class="header__text">
+      <h1>Oblicz efektywność energetyczną swojego domu!</h1>
+      <p>Wykaż inicjatywę i rozwiąż problem nadmiernego zużycia energii!</p>
+    </div>
+  </header>
+  <main>
+    {% block content %}
+    <h2 class="main__title main__title--margin">Efektywność energetyczna Twojego domu:</h2>
+    <div class="main__rez" id="end">
+        {%if result <= 150%}
+        <img class="rez__img" src="../../static/img/planet_good.svg" alt="">
+        <span>Twój wynik: {{result}} kWh</span>
+        <span>Twój dom jest wyjątkowo wydajny, jeśli chodzi o zużycie energii!</span>
+        {%elif result >= 151 and result < 300%}
+        <img class="rez__img" src="../../static/img/planet_medium.svg" alt="">
+        <span>Twój wynik: {{result}} kWh</span>
+        <span>Efektywność energetyczna Twojego domu jest średnia!</span>
+        {%elif result >= 300%}
+        <img class="rez__img" src="../../static/img/planet_bad.svg" alt="">
+        <span>Twój wynik: {{result}} kWh</span>
+        <span>Efektywność energetyczna Twojego domu jest poniżej średniej!</span>
+        {%endif%}
+    </div>
+    {% endblock %}
+  </main>
+  <footer>
+
+  </footer>
+</body>
+</html>
+
+#style.css
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    line-height: 20px;
+    background-color: #fff;
+    color: #272727;
+}
+
+h1, h2, p {
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    background-image: url("../img/back.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left;
+    background-color: #CCE59D;
+    padding: 25vh 30px;
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.header__text {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: fit-content;
+    text-align: right;
+}
+
+main {
+    padding: 0 30px 100px;
+}
+
+.main__title {
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.list {
+    display: flex;
+    justify-content: space-around;
+}
+
+.list__item a {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: inherit;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 24px;
+    border: 1px solid #EB8028;
+    transition: 0.2s;
+}
+.item__img {
+    object-fit: contain;
+    width: 150px;
+}
+
+.list__item a:hover {
+    box-shadow: 1px 1px 4px 4px #0EB07C;
+}
+
+.main__rez {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.rez__img {
+    object-fit: contain;
+    width: 300px;
+}
+
+.main__title--margin {
+    margin-bottom: 50px;
+}
+
